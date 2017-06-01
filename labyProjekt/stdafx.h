@@ -76,6 +76,11 @@ class Archer : public Character
 	int agility = 35;
 	int archery = 30;
 };
+class Option
+{
+public: 
+	void showOption(Knight k1);
+};
 
 
 

@@ -5,6 +5,10 @@
 #include <iostream>
 #include <windows.h>
 #include <string>
+#include <iomanip>
+#include <stdlib.h>
+
+
 
 void ShowConsoleCursor(bool showFlag)
 {
@@ -17,21 +21,32 @@ void ShowConsoleCursor(bool showFlag)
 
 int main()
 {
+	HANDLE hOut;
+	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+
 	ShowConsoleCursor(false);
 	system("MODE CON COLS=100 LINES=35");
+
 	Menu menu1;
-	menu1.showMenu();
+	if (menu1.showMenu() == 1) { system("cls");  return 0; }
 	////////////////////////////////////
-	string name;
-	cout << "Enter your Knight name: "; cin >> name;
-	Knight knight1(name);
 	
+	SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
+	cout << endl;
+	cout << setw(55) << "Enter your Knight name: "; 
+	SetConsoleTextAttribute(hOut, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
+
+	ShowConsoleCursor(true);
+	string name;
+	cin >> name;
+	ShowConsoleCursor(false);
+
 	system("cls");
 
-	CharacterInterface test;
-	test.showCharacterInterface(knight1);
+	Knight k1(name);
+	Option option;
+	option.showOption(k1);
 
 	system("pause");
 	return 0;
 }
-
