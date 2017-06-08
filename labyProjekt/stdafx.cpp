@@ -112,7 +112,28 @@ void CharacterInterface::showCharacterInterface(Knight k1)
 	cout << "|____________________|" << endl;
 }
 
-void Option::showOption(Knight k1)
+void CharacterInterface::showEnemyInterface(Enemy e1)
+{
+	Weapon rustySword("Rusty Sword", 20, 10);
+
+	cout << "______________________" << endl;
+	cout << "|";
+	
+	cout << setw(13) << "Enemy" << setw(8); cout << "|" << endl;
+	cout << "|Name: " << e1.name << setw(15 - e1.name.length()) << "|" << endl;
+	cout << "|HP: " << e1.health << setw(14) << "|" << endl;
+	cout << "|____________________|" << endl;
+	cout << "|     Attributes     |" << endl;
+	cout << "|Level: " << e1.level << "            |" << endl;
+	cout << "|Strenght: " << e1.strenght << "        |" << endl;
+	cout << "|Terror: " << e1.terror << "          |" << endl;
+	cout << "|_____Equipment______|" << endl;
+	cout << "|" << rustySword.name << "         |" << endl;
+	cout << "|+" << rustySword.boost << " damage          |" << endl;
+	cout << "|____________________|" << endl;
+}
+
+void Option::showOption(Knight k1, Enemy e1)
 {
 	HANDLE hOut;
 	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -121,16 +142,24 @@ void Option::showOption(Knight k1)
 	char pointer2[4] = { '>',' ',' ',' ' };
 	int i = 0;
 	int exit = 1;
-	
+	CharacterInterface test;
+	string info;
 	while (exit)
 	{
 		system("cls");
-		CharacterInterface test;
 		test.showCharacterInterface(k1);
+		
 		cout << endl;
 
-		cout << setw(6) << pointer2[0] << " opcja1 " << pointer[0] << endl << endl;
-		cout << setw(6) << pointer2[1] << " opcja2 " << pointer[1] << endl << endl;
+		cout << info;
+
+		cout << endl;
+
+		test.showEnemyInterface(e1);
+		cout << endl;
+
+		cout << setw(6) << pointer2[0] << " Attack " << pointer[0] << endl << endl;
+		cout << setw(6) << pointer2[1] << " Defense " << pointer[1] << endl << endl;
 		cout << setw(6) << pointer2[2] << " opcja3 " << pointer[2] << endl << endl;
 		cout << setw(6) << pointer2[3] << " opcja4 " << pointer[3] << endl << endl;
 
@@ -174,7 +203,12 @@ void Option::showOption(Knight k1)
 
 		case 13:
 		{
-			
+			if (i == 0)
+			{
+				info = "You attacked your opponent!";
+
+
+			}
 
 		} break;
 

@@ -15,6 +15,7 @@
 using namespace std;
 
 class Knight;
+class Enemy;
 class CharacterInterface;
 
 class Weapon
@@ -39,11 +40,14 @@ class Menu
 public:
 	int showMenu();
 };
+
 class CharacterInterface
 {
 public:
 	void showCharacterInterface(Knight k1);
+	void showEnemyInterface(Enemy e1);
 };
+
 class Character
 {
 public:
@@ -54,6 +58,7 @@ public:
 	void death(int health);
 	
 };
+
 class Knight : public Character
 {
 	int strenght = 35; // max 99 
@@ -66,22 +71,36 @@ public:
 
 	friend void CharacterInterface::showCharacterInterface(Knight k1);
 };
+
 class Alchemist : public Character
 {
 	int mana = 35;
 	int magic = 30;
 };
+
 class Archer : public Character
 {
 	int agility = 35;
 	int archery = 30;
 };
+
 class Option
 {
 public: 
-	void showOption(Knight k1);
+	void showOption(Knight k1, Enemy e1);
 };
 
+class Enemy: public Character
+{
+	int strenght = 40;
+	int terror = 10;
+public:
+	Enemy(string enemy_name)
+	{
+		name = enemy_name;
+	}
+	friend void CharacterInterface::showEnemyInterface(Enemy e1);
+};
 
 
 // TODO: reference additional headers your program requires here

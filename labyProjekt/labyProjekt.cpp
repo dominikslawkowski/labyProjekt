@@ -8,7 +8,7 @@
 #include <iomanip>
 #include <stdlib.h>
 
-
+using namespace std;
 
 void ShowConsoleCursor(bool showFlag)
 {
@@ -19,17 +19,26 @@ void ShowConsoleCursor(bool showFlag)
 	SetConsoleCursorInfo(out, &cursorInfo);
 }
 
+
+
 int main()
 {
+	
+	//zmienna potrzebna do zmiany koloru czcionki
 	HANDLE hOut;
 	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
-	ShowConsoleCursor(false);
-	system("MODE CON COLS=100 LINES=35");
 
+	//ustawienie rozmiarow konsoli
+	SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
+	system("MODE CON COLS=100 LINES=40");
+	
+	//funkcja usuwajaca kursor
+	ShowConsoleCursor(false);
+
+	////////////////////////////////////
 	Menu menu1;
 	if (menu1.showMenu() == 1) { system("cls");  return 0; }
-	////////////////////////////////////
 	
 	SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
 	cout << endl;
@@ -44,8 +53,14 @@ int main()
 	system("cls");
 
 	Knight k1(name);
+	Enemy e1("Skeleton");
 	Option option;
-	option.showOption(k1);
+
+	while (1)
+	{
+		option.showOption(k1, e1);
+		system("cls");
+	}
 
 	system("pause");
 	return 0;
