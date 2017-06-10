@@ -7,6 +7,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <cstdlib>
 
 
 using namespace std;
@@ -24,13 +25,15 @@ int Menu::showMenu()
 	while (exit)
 	{
 		system("cls");
+		cout << endl <<endl <<endl;
 		SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
-		cout << setw(60) << "Dungeon Adventure v1.0"; cout << setw(60) << endl << endl;
+		cout << setw(95) << "Dungeon Adventure v1.0"; cout << setw(60) << endl << endl;
 		SetConsoleTextAttribute(hOut, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
-		cout << setw(45) << pointer2[0] << " Start " << pointer[0] << endl << endl;
-		cout << setw(42) << pointer2[1] << " Score Board " << pointer[1] << endl << endl;
-		cout << setw(45) << pointer2[2] << " About " << pointer[2] << endl << endl;
-		cout << setw(44) << pointer2[3] << " Exit :( " << pointer[3] << endl << endl;
+		cout << endl << endl;
+		cout << setw(80) << pointer2[0] << " Start " << pointer[0] << endl << endl;
+		cout << setw(77) << pointer2[1] << " Score Board " << pointer[1] << endl << endl;
+		cout << setw(80) << pointer2[2] << " About " << pointer[2] << endl << endl;
+		cout << setw(80) << pointer2[3] << " Exit ? " << pointer[3] << endl << endl;
 
 		switch (_getch())
 		{
@@ -83,10 +86,8 @@ int Menu::showMenu()
 	}
 }
 
-void CharacterInterface::showCharacterInterface(Knight k1)
+void CharacterInterface::showCharacterInterface(Knight knight1, Weapon knightWeapon)
 {
-	Weapon longSword("Long Sword", 10, 35);
-
 	HANDLE hOut;
 	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -95,45 +96,45 @@ void CharacterInterface::showCharacterInterface(Knight k1)
 	SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_INTENSITY); 
 	cout << setw(13) <<"Knight"<<setw(8); 
 	SetConsoleTextAttribute(hOut, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED); cout << "|" << endl;
-	cout << "|Name: " << k1.name << setw(15 - k1.name.length()) << "|" << endl;
-	cout << "|HP: " << k1.health << setw(14) << "|" << endl;
-	cout << "|Fear: " << k1.fear <<setw(14) <<"|"<< endl;
+	cout << "|Name: " << knight1.name << setw(15 - knight1.name.length()) << "|" << endl;
+	cout << "|HP: " << knight1.health << setw(14) << "|" << endl;
+	cout << "|Fear: " << knight1.fear <<setw(14) <<"|"<< endl;
 	cout << "|____________________|" << endl;
 	cout << "|";
 	SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
 	cout << "     Attributes     ";
 	SetConsoleTextAttribute(hOut, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED); cout << "|" << endl;
-	cout << "|Level: " << k1.level << "            |" << endl;
-	cout << "|Strenght: " << k1.strenght << "        |" << endl;
-	cout << "|Fencing: " << k1.fencing << "         |" << endl;
+	cout << "|Level: " << knight1.level << setw(13)<<"|" << endl;
+	cout << "|Strenght: " << knight1.strenght <<setw(9) <<"|" << endl;
+	cout << "|Fencing: " << knight1.fencing <<setw(10) <<"|" << endl;
 	cout << "|_____Equipment______|" << endl;
-	cout << "|" << longSword.name<<"          |" << endl;
-	cout << "|+"<<longSword.boost<<" damage          |" << endl;
+	cout << "|" << knightWeapon.name<<setw(11)<<"|" << endl;
+	cout << "|+"<<knightWeapon.boost<<" damage"<<setw(11)<<"|" << endl;
+	cout << "|Potions: " << knight1.potions << setw(11)<<"|" << endl;
 	cout << "|____________________|" << endl;
 }
 
-void CharacterInterface::showEnemyInterface(Enemy e1)
+void CharacterInterface::showEnemyInterface(Enemy enemy1, Weapon enemyWeapon)
 {
-	Weapon rustySword("Rusty Sword", 20, 10);
 
 	cout << "______________________" << endl;
 	cout << "|";
 	
 	cout << setw(13) << "Enemy" << setw(8); cout << "|" << endl;
-	cout << "|Name: " << e1.name << setw(15 - e1.name.length()) << "|" << endl;
-	cout << "|HP: " << e1.health << setw(14) << "|" << endl;
+	cout << "|Name: " << enemy1.name << setw(15 - enemy1.name.length()) << "|" << endl;
+	cout << "|HP: " << enemy1.health; if (enemy1.health == 100)cout << setw(14); else if (enemy1.health < 10)cout << setw(16); else  cout << setw(15); cout << "|" << endl;
 	cout << "|____________________|" << endl;
 	cout << "|     Attributes     |" << endl;
-	cout << "|Level: " << e1.level << "            |" << endl;
-	cout << "|Strenght: " << e1.strenght << "        |" << endl;
-	cout << "|Terror: " << e1.terror << "          |" << endl;
+	cout << "|Level: " << enemy1.level << "            |" << endl;
+	cout << "|Strenght: " << enemy1.strenght << "        |" << endl;
+	cout << "|Terror: " << enemy1.terror << "          |" << endl;
 	cout << "|_____Equipment______|" << endl;
-	cout << "|" << rustySword.name << "         |" << endl;
-	cout << "|+" << rustySword.boost << " damage          |" << endl;
+	cout << "|" << enemyWeapon.name << "         |" << endl;
+	cout << "|+" << enemyWeapon.boost << " damage          |" << endl;
 	cout << "|____________________|" << endl;
 }
 
-void Option::showOption(Knight k1, Enemy e1)
+void Option::showOption(Knight knight1, Enemy enemy1, Weapon knightWeapon, Weapon enemyWeapon)
 {
 	HANDLE hOut;
 	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -144,10 +145,11 @@ void Option::showOption(Knight k1, Enemy e1)
 	int exit = 1;
 	CharacterInterface test;
 	string info;
+
 	while (exit)
 	{
 		system("cls");
-		test.showCharacterInterface(k1);
+		test.showCharacterInterface(knight1, knightWeapon);
 		
 		cout << endl;
 
@@ -155,12 +157,14 @@ void Option::showOption(Knight k1, Enemy e1)
 
 		cout << endl;
 
-		test.showEnemyInterface(e1);
+		if (enemy1.health > 0) { test.showEnemyInterface(enemy1, enemyWeapon); }
+		else {  }
+
 		cout << endl;
 
 		cout << setw(6) << pointer2[0] << " Attack " << pointer[0] << endl << endl;
 		cout << setw(6) << pointer2[1] << " Defense " << pointer[1] << endl << endl;
-		cout << setw(6) << pointer2[2] << " opcja3 " << pointer[2] << endl << endl;
+		cout << setw(4) << pointer2[2] << " Drink Potion " << pointer[2] << endl << endl;
 		cout << setw(6) << pointer2[3] << " opcja4 " << pointer[3] << endl << endl;
 
 		switch (_getch())
@@ -205,9 +209,24 @@ void Option::showOption(Knight k1, Enemy e1)
 		{
 			if (i == 0)
 			{
+				srand(time(NULL));
 				info = "You attacked your opponent!";
-
-
+				enemy1.health -= (rand() % (knight1.fencing)/10) + knightWeapon.boost - knight1.fear;
+			}
+			else if (i == 1)
+			{
+				info = "You defend yourself.";
+			}
+			else if (i == 2)
+			{
+				if (knight1.potions <= 0) info = "You have no potions.";
+				else if (knight1.health >= 100) info = "You have full health points.";
+				else
+				{
+					knight1.health += 10;
+					knight1.potions--;
+					info = "You drank a potion.";
+				}
 			}
 
 		} break;

@@ -31,7 +31,7 @@ int main()
 
 	//ustawienie rozmiarow konsoli
 	SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
-	system("MODE CON COLS=100 LINES=40");
+	system("MODE CON COLS=170 LINES=40");
 	
 	//funkcja usuwajaca kursor
 	ShowConsoleCursor(false);
@@ -41,8 +41,8 @@ int main()
 	if (menu1.showMenu() == 1) { system("cls");  return 0; }
 	
 	SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
-	cout << endl;
-	cout << setw(55) << "Enter your Knight name: "; 
+	cout << endl << endl <<endl << endl << endl << endl << endl;
+	cout << setw(90) << "Enter your Knight name: "; 
 	SetConsoleTextAttribute(hOut, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
 
 	ShowConsoleCursor(true);
@@ -52,15 +52,20 @@ int main()
 
 	system("cls");
 
-	Knight k1(name);
-	Enemy e1("Skeleton");
+	Knight knight1(name);
+	Weapon rustySword("Rusty Sword", 20);
+
+	Enemy enemy1("Skeleton", 50);
+	Weapon longSword("Long Sword", 10);
 	Option option;
 
-	while (1)
-	{
-		option.showOption(k1, e1);
-		system("cls");
-	}
+	int stage = 1;
+	int *pointer = &stage;
+
+
+	option.showOption(knight1, enemy1, longSword, rustySword);
+	system("cls");
+
 
 	system("pause");
 	return 0;

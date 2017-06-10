@@ -20,15 +20,13 @@ class CharacterInterface;
 
 class Weapon
 {
-	int boost;
-	int requirement;
 public:
+	int boost;
 	string name;
-		Weapon(string n, int b, int r)
+		Weapon(string n, int b)
 	{
 		name = n;
 		boost = b;
-		requirement = r;
 	}
 		friend CharacterInterface;
 };
@@ -44,8 +42,8 @@ public:
 class CharacterInterface
 {
 public:
-	void showCharacterInterface(Knight k1);
-	void showEnemyInterface(Enemy e1);
+	void showCharacterInterface(Knight knight1, Weapon knightWeapon);
+	void showEnemyInterface(Enemy enemy1, Weapon enemyWeapon);
 };
 
 class Character
@@ -61,15 +59,16 @@ public:
 
 class Knight : public Character
 {
+public:
 	int strenght = 35; // max 99 
 	int fencing = 30; // max 99
-public:
+	int potions = 3;
 	Knight(string knight_name)
 	{
 		name = knight_name;
 	}
 
-	friend void CharacterInterface::showCharacterInterface(Knight k1);
+	friend void CharacterInterface::showCharacterInterface(Knight knight1, Weapon knightWeapon);
 };
 
 class Alchemist : public Character
@@ -87,19 +86,20 @@ class Archer : public Character
 class Option
 {
 public: 
-	void showOption(Knight k1, Enemy e1);
+	void showOption(Knight knight1, Enemy enemy1, Weapon knightWeapon, Weapon enemyWeapon);
 };
 
 class Enemy: public Character
 {
+public:
 	int strenght = 40;
 	int terror = 10;
-public:
-	Enemy(string enemy_name)
+	Enemy(string enemy_name, int enemy_health)
 	{
 		name = enemy_name;
+		health = enemy_health;
 	}
-	friend void CharacterInterface::showEnemyInterface(Enemy e1);
+	friend void CharacterInterface::showEnemyInterface(Enemy enemy1, Weapon enemyWeapon);
 };
 
 
