@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <stdlib.h>
 
+
 using namespace std;
 
 void ShowConsoleCursor(bool showFlag)
@@ -31,7 +32,7 @@ int main()
 
 	//ustawienie rozmiarow konsoli
 	SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
-	system("MODE CON COLS=170 LINES=40");
+	system("MODE CON COLS=170 LINES=45");
 	
 	//funkcja usuwajaca kursor
 	ShowConsoleCursor(false);
@@ -53,10 +54,11 @@ int main()
 	system("cls");
 
 	Knight knight1(name);
-	Weapon rustySword("Rusty Sword", 20);
+		Weapon longSword("Long Sword", 10);
 
 	Enemy enemy1("Skeleton", 50);
-	Weapon longSword("Long Sword", 10);
+		Weapon rustySword("Rusty Sword", 20);
+	
 	Option option;
 
 	int stage = 1;
@@ -64,8 +66,8 @@ int main()
 
 
 	option.showOption(knight1, enemy1, longSword, rustySword);
-	system("cls");
-
+	
+	Sleep(200);
 
 	system("pause");
 	return 0;
