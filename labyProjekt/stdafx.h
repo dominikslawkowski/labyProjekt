@@ -42,7 +42,7 @@ public:
 class CharacterInterface
 {
 public:
-	void showCharacterInterface(Knight knight1, Weapon knightWeapon);
+	void showCharacterInterface(Knight *knight1, Weapon knightWeapon);
 	void showEnemyInterface(Enemy enemy1, Weapon enemyWeapon);
 };
 
@@ -51,9 +51,10 @@ class Character
 public:
 	string name;
 	int health = 100;
-	int fear = 0;
+	int fearCounter = 0;
+	int fear[5] = { 0, 1, 2, 5, 10 };
 	int level = 1;
-	void death(int health);
+	//void death(int health);
 	
 };
 
@@ -63,12 +64,16 @@ public:
 	int strenght = 35; // max 99 
 	int fencing = 30; // max 99
 	int potions = 3;
+	int scrolls = 3;
 	Knight(string knight_name)
 	{
 		name = knight_name;
 	}
-
-	friend void CharacterInterface::showCharacterInterface(Knight knight1, Weapon knightWeapon);
+	void Attack(Knight *knight, Weapon knightWeapon, Enemy *enemy);
+	void Defence(Knight *knight);
+	void drinkPotion(Knight *knight);
+	void useScroll(Knight *knight);
+	friend void CharacterInterface::showCharacterInterface(Knight *knight1, Weapon knightWeapon);
 };
 
 class Alchemist : public Character
@@ -86,7 +91,9 @@ class Archer : public Character
 class Option
 {
 public: 
-	void showOption(Knight knight1, Enemy enemy1, Weapon knightWeapon, Weapon enemyWeapon);
+	void showOption(Knight *knight1, Enemy enemy1, Weapon knightWeapon, Weapon enemyWeapon);
+	void gameOver();
+	void showText(Enemy enemy);
 };
 
 class Enemy: public Character
@@ -94,13 +101,15 @@ class Enemy: public Character
 public:
 	int strenght = 40;
 	int terror = 10;
-	Enemy(string enemy_name, int enemy_health)
+	Enemy(string enemy_name, int enemy_health, int enemy_strenght, int enemy_terror)
 	{
 		name = enemy_name;
 		health = enemy_health;
+		strenght = enemy_strenght;
+		terror = enemy_terror;
 	}
+	void Action(Enemy enemy, Knight *knight, Weapon enemyWeapon, bool lastKnightAction);
 	friend void CharacterInterface::showEnemyInterface(Enemy enemy1, Weapon enemyWeapon);
 };
 
 
-// TODO: reference additional headers your program requires here
