@@ -231,7 +231,7 @@ void CharacterInterface::showEnemyInterface(Enemy enemy1, Weapon enemyWeapon)
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-void Option::showText(Enemy enemy)
+void Option::showText(Knight *knight)
 {
 	HANDLE hOut;
 	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -240,7 +240,21 @@ void Option::showText(Enemy enemy)
 	system("cls");
 	cout << endl << endl << endl <<endl << endl << endl << endl;
 
-	if (enemy.health <= 0)
+	if (knight->health <= 0)
+	{
+		cout << setw(margin-7);
+		int n = 0;
+		
+		string text = "You lost the fight! Enter to continue";
+		while (text[n])
+		{
+			SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
+			cout << text[n++];
+			SetConsoleTextAttribute(hOut, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
+			Sleep(50);
+		}
+	}
+	else
 	{
 		cout << setw(margin-7);
 		int n = 0;
@@ -250,20 +264,7 @@ void Option::showText(Enemy enemy)
 			SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
 			cout << text[n++];
 			SetConsoleTextAttribute(hOut, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
-			Sleep(100);
-		}
-	}
-	else
-	{
-		cout << setw(margin-7);
-		int n = 0;
-		string text = "You lost the fight! Enter to begin next stage.";
-		while (text[n])
-		{
-			SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
-			cout << text[n++];
-			SetConsoleTextAttribute(hOut, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
-			Sleep(100);
+			Sleep(50);
 		}
 	}
 	Sleep(2000);
@@ -395,16 +396,139 @@ void Option::showOption(Knight *knight1, Enemy enemy1, Weapon knightWeapon, Weap
 		while (_getch() != 13) {};
 	}
 	
+}
 
-	Option text;
-	text.showText(enemy1);
+
+void Option::levelUp(Knight *knight)
+{
+	system("cls");
 	
+
+	char pointer[4] = { '<',' ',' ',' ' };
+	char pointer2[4] = { '>',' ',' ',' ' };
+	int i = 0;
+
+	HANDLE hOut;
+	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	bool exit = TRUE;
+
+	while (exit)
+	{
+		system("cls");
+		cout << endl << endl << endl;
+		SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
+		cout << setw(90) << "Choose a prize: " << endl;
+		SetConsoleTextAttribute(hOut, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
+		cout << endl << endl;
+		cout << setw(66) << pointer2[0] << " Potion of strength (+ 10 points) " << pointer[0] << endl << endl;
+		cout << setw(67) << pointer2[1] << " Book of Fencing (+ 10 points) " << pointer[1] << endl << endl;
+		cout << setw(67) << pointer2[2] << " Potion of Endurance (+ 20 HP) " << pointer[2] << endl << endl;
+		cout << setw(70) << pointer2[3] << " --------------------------" << pointer[3] << endl << endl;
+
+		switch (_getch())
+		{
+		case 72:
+			if (i == 0)
+			{
+				pointer[3] = pointer[i];
+				pointer[i] = ' ';
+				pointer2[3] = pointer2[i];
+				pointer2[i] = ' ';
+
+				i = 3;
+			}
+			else
+			{
+				pointer[i - 1] = pointer[i];
+				pointer[i] = ' ';
+				pointer2[i - 1] = pointer2[i];
+				pointer2[i] = ' ';
+				i--;
+			} break;
+
+		case 80:
+			if (i == 3)
+			{
+				pointer[0] = pointer[i];
+				pointer[i] = ' ';
+				pointer2[0] = pointer2[i];
+				pointer2[i] = ' ';
+				i = 0;
+			}
+			else
+			{
+				pointer[i + 1] = pointer[i];
+				pointer[i] = ' ';
+				pointer2[i + 1] = pointer2[i];
+				pointer2[i] = ' ';
+				i++;
+			} break;
+
+		case 13:
+			if (i == 0)
+			{
+				knight->strenght += 10;
+				exit = FALSE;
+			}
+			else if (i == 1)
+			{
+				knight->fencing += 10;
+				exit = FALSE;
+			}
+			else if (i == 2)
+			{
+				knight->health += 20;
+				exit = FALSE;
+			}
+
+			else if (i == 3) {  }
+			break;
+		}
+
+	}
+	
+}
+
+void Option::congratulations()
+{
+	HANDLE hOut;
+	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	int margin = 70;
+
+	system("cls");
+	cout << endl << endl << endl << endl << endl << setw(margin-7);
+
+		int n = 0;
+		string text = "You beat all your opponents! Congratulations!";
+		while (text[n])
+		{
+			SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
+			cout << text[n++];
+			SetConsoleTextAttribute(hOut, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
+			Sleep(50);
+		}
+		Sleep(3000);
 }
 
 void Option::gameOver()
 {
+	HANDLE hOut;
+	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	int margin = 70;
+
 	system("cls");
-	cout << endl << endl << endl << endl << endl << endl << endl << setw(70) << "GAME OVER";
+	cout << endl << endl << endl << endl << endl << setw(margin);
+	int n = 0;
+	string text = "GAME OVER...";
+	while (text[n])
+	{
+		SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
+		cout << text[n++];
+		SetConsoleTextAttribute(hOut, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
+		Sleep(50);
+	}
+	Sleep(3000);
 }
 
 

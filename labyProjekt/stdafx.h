@@ -65,9 +65,10 @@ public:
 	int fencing = 30; // max 99
 	int potions = 3;
 	int scrolls = 3;
-	Knight(string knight_name)
+	Knight(string knight_name, int knight_HP)
 	{
 		name = knight_name;
+		health = knight_HP;
 	}
 	void Attack(Knight *knight, Weapon knightWeapon, Enemy *enemy);
 	void Defence(Knight *knight);
@@ -92,8 +93,10 @@ class Option
 {
 public: 
 	void showOption(Knight *knight1, Enemy enemy1, Weapon knightWeapon, Weapon enemyWeapon);
+	void showText(Knight *knight);
+	void levelUp(Knight *knight);
+	void congratulations();
 	void gameOver();
-	void showText(Enemy enemy);
 };
 
 class Enemy: public Character
@@ -111,5 +114,3 @@ public:
 	void Action(Enemy enemy, Knight *knight, Weapon enemyWeapon, bool lastKnightAction);
 	friend void CharacterInterface::showEnemyInterface(Enemy enemy1, Weapon enemyWeapon);
 };
-
-

@@ -25,19 +25,18 @@ void ShowConsoleCursor(bool showFlag)
 int main()
 {
 	
-	//zmienna potrzebna do zmiany koloru czcionki
+	//The variable needed to change the color of the font
 	HANDLE hOut;
 	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
 
-	//ustawienie rozmiarow konsoli
+	//Set the size of the console
 	SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
 	system("MODE CON COLS=170 LINES=45");
 	
-	//funkcja usuwajaca kursor
+	//Function to remove the cursor
 	ShowConsoleCursor(false);
 
-	//////////////////////////////////////////
 
 	while (true)
 	{
@@ -55,34 +54,53 @@ int main()
 		ShowConsoleCursor(false);
 
 		system("cls");
+
 		//////////////////////////////////////////
-		Knight knight1(name);
+		//Creating all characters
+		Knight knight1(name, 100);
 		Weapon longSword("Long Sword", 10);
 
-		Enemy enemy1("Skeleton", 10, 40, 10);
+		Enemy enemy1("Skeleton", 50, 40, 10);
 		Weapon rustySword("Rusty Sword", 10);
 
-		Enemy enemy2("Undead Mage", 10, 45, 15);
-		Weapon none("Black Magic Wand", 20);
+		Enemy enemy2("Undead Mage", 60, 45, 15);
+		Weapon blackMagicWand("Black Magic Wand", 20);
+
+		Enemy enemy3("Black Knight", 70, 50, 20);
+		Weapon ironWarAxe("Iron War Axe", 30);
 
 
 		//////////////////////////////////////////
 
-		int stage = 1;
-
 		Option option;
-
+		
+		//First stage
 		option.showOption(&knight1, enemy1, longSword, rustySword);
+		option.showText(&knight1);
+		option.levelUp(&knight1);
+		
+		if (knight1.health > 0)
+		{	
+			//Second stage
+			option.showOption(&knight1, enemy2, longSword, blackMagicWand);
+			option.showText(&knight1);
+			if (knight1.health > 0) option.levelUp(&knight1);
 
-		if (knight1.health > 0) option.showOption(&knight1, enemy2, longSword, none);
 
-		else
-		{
-			system("cls");
-			cout << endl << endl << endl << endl << endl << endl << endl << setw(70) << "GAME OVER";
+			if (knight1.health > 0)
+			{
+				//Third stage
+				option.showOption(&knight1, enemy3, longSword, ironWarAxe);
+				if (knight1.health > 0) option.congratulations();
+			}
 		}
 
+		//When the hero dies, the game ends
 
+		if (knight1.health <= 0)
+		{
+			option.gameOver();
+		}
 
 		Sleep(200);
 	}
