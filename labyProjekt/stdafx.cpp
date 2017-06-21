@@ -54,7 +54,7 @@ void Enemy::Action(Enemy enemy, Knight *knight, Weapon enemyWeapon, bool lastKni
 	}
 }
 
-void Knight::Defence(Knight *knight)
+void Knight::Defence(Knight *knight, bool *turn, bool *lastKnightAction)
 {
 	int sleepTime = 1500;
 
@@ -64,6 +64,8 @@ void Knight::Defence(Knight *knight)
 	}
 	else
 	{
+	*turn = FALSE;
+	*lastKnightAction = TRUE;
 	knight->fearCounter -= 1;
 	cout << "You defend yourself. Your fear: " << knight->fear[fearCounter] << endl << endl;
 	}
@@ -167,15 +169,23 @@ int Menu::showMenu()
 			} break;
 
 		case 13:
+			//
 			if (i == 0)
-			{ system("cls"); return 0; }
-			else if (i == 3) { return 1; }
+				{ system("cls"); return 0; }
+			else if (i == 2)
+				{ return 2; }
+			else if (i == 3) 
+				{ return 3; }
 			break;
 
 
 		}
 		
 	}
+}
+void Menu::showAbout()
+{
+	
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -360,10 +370,7 @@ void Option::showOption(Knight *knight1, Enemy enemy1, Weapon knightWeapon, Weap
 				}
 				else if (i == 1)
 				{
-					knight1->Defence(knight1);
-
-					lastKnightAction = TRUE;
-					turn = FALSE;
+					knight1->Defence(knight1, &turn, &lastKnightAction);
 				}
 				
 				else if (i == 2)
@@ -404,8 +411,8 @@ void Option::levelUp(Knight *knight)
 	system("cls");
 	
 
-	char pointer[4] = { '<',' ',' ',' ' };
-	char pointer2[4] = { '>',' ',' ',' ' };
+	char pointer[3] = { '<',' ',' ' };
+	char pointer2[3] = { '>',' ',' ' };
 	int i = 0;
 
 	HANDLE hOut;
@@ -424,19 +431,18 @@ void Option::levelUp(Knight *knight)
 		cout << setw(66) << pointer2[0] << " Potion of strength (+ 10 points) " << pointer[0] << endl << endl;
 		cout << setw(67) << pointer2[1] << " Book of Fencing (+ 10 points) " << pointer[1] << endl << endl;
 		cout << setw(67) << pointer2[2] << " Potion of Endurance (+ 20 HP) " << pointer[2] << endl << endl;
-		cout << setw(70) << pointer2[3] << " --------------------------" << pointer[3] << endl << endl;
 
 		switch (_getch())
 		{
 		case 72:
 			if (i == 0)
 			{
-				pointer[3] = pointer[i];
+				pointer[2] = pointer[i];
 				pointer[i] = ' ';
-				pointer2[3] = pointer2[i];
+				pointer2[2] = pointer2[i];
 				pointer2[i] = ' ';
 
-				i = 3;
+				i = 2;
 			}
 			else
 			{
@@ -448,7 +454,7 @@ void Option::levelUp(Knight *knight)
 			} break;
 
 		case 80:
-			if (i == 3)
+			if (i == 2)
 			{
 				pointer[0] = pointer[i];
 				pointer[i] = ' ';
@@ -481,8 +487,6 @@ void Option::levelUp(Knight *knight)
 				knight->health += 20;
 				exit = FALSE;
 			}
-
-			else if (i == 3) {  }
 			break;
 		}
 
@@ -518,7 +522,7 @@ void Option::gameOver()
 	int margin = 70;
 
 	system("cls");
-	cout << endl << endl << endl << endl << endl << setw(margin);
+	cout << endl << endl << endl << endl << endl <<endl << setw(margin + 5);
 	int n = 0;
 	string text = "GAME OVER...";
 	while (text[n])

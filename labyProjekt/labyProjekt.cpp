@@ -41,7 +41,7 @@ int main()
 	while (true)
 	{
 		Menu menu1;
-		if (menu1.showMenu() == 1) { system("cls");  return 0; }
+		if (menu1.showMenu() == 3) { system("cls");  return 0; }
 
 		SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
 		cout << endl << endl << endl << endl << endl << endl;
@@ -58,7 +58,7 @@ int main()
 		//////////////////////////////////////////
 		//Creating all characters
 		Knight knight1(name, 100);
-		Weapon longSword("Long Sword", 10);
+		Weapon longSword("Long Sword", 15);
 
 		Enemy enemy1("Skeleton", 50, 40, 10);
 		Weapon rustySword("Rusty Sword", 10);
@@ -77,7 +77,7 @@ int main()
 		//First stage
 		option.showOption(&knight1, enemy1, longSword, rustySword);
 		option.showText(&knight1);
-		option.levelUp(&knight1);
+		if (knight1.health > 0) option.levelUp(&knight1);
 		
 		if (knight1.health > 0)
 		{	
@@ -85,7 +85,6 @@ int main()
 			option.showOption(&knight1, enemy2, longSword, blackMagicWand);
 			option.showText(&knight1);
 			if (knight1.health > 0) option.levelUp(&knight1);
-
 
 			if (knight1.health > 0)
 			{

@@ -37,6 +37,7 @@ class Menu
 	
 public:
 	int showMenu();
+	void showAbout();
 };
 
 class CharacterInterface
@@ -71,7 +72,7 @@ public:
 		health = knight_HP;
 	}
 	void Attack(Knight *knight, Weapon knightWeapon, Enemy *enemy);
-	void Defence(Knight *knight);
+	void Defence(Knight *knight, bool *turn, bool *lastKnightAction);
 	void drinkPotion(Knight *knight);
 	void useScroll(Knight *knight);
 	friend void CharacterInterface::showCharacterInterface(Knight *knight1, Weapon knightWeapon);
