@@ -13,11 +13,12 @@
 
 using namespace std;
 ///////////////////////////////////////////////////////////////////////////////////////
+//Segment with character functions
 
 void Knight::Attack(Knight *knight, Weapon knightWeapon, Enemy *enemy)
 {
 	int sleepTime = 1500;
-	
+	//Randomization the value of the attack and add attributes
 	srand(time(NULL));
 	int damage = (rand() % (knight->fencing) / 10) + (knight->strenght/10) + knightWeapon.boost - knight->fear[fearCounter];
 	enemy->health -= damage;
@@ -28,6 +29,7 @@ void Knight::Attack(Knight *knight, Weapon knightWeapon, Enemy *enemy)
 
 void Enemy::Action(Enemy enemy, Knight *knight, Weapon enemyWeapon, bool lastKnightAction)
 {
+	//Randomization an action
 	int chooseAction = rand() % 21 - 10;
 
 	if (chooseAction > 0 && lastKnightAction == FALSE && knight->fearCounter <= 4)
@@ -105,6 +107,7 @@ void Knight::useScroll(Knight *knight)
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
+//Segment with menu function
 
 int Menu::showMenu()
 {
@@ -169,11 +172,10 @@ int Menu::showMenu()
 			} break;
 
 		case 13:
-			//
+
 			if (i == 0)
 				{ system("cls"); return 0; }
-			else if (i == 2)
-				{ return 2; }
+			//The program will turn off
 			else if (i == 3) 
 				{ return 3; }
 			break;
@@ -183,12 +185,9 @@ int Menu::showMenu()
 		
 	}
 }
-void Menu::showAbout()
-{
-	
-}
 
 ///////////////////////////////////////////////////////////////////////////////////////
+//Segment with interface functions
 
 void CharacterInterface::showCharacterInterface(Knight *knight1, Weapon knightWeapon)
 {
@@ -240,6 +239,7 @@ void CharacterInterface::showEnemyInterface(Enemy enemy1, Weapon enemyWeapon)
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
+//Segment with option functions
 
 void Option::showText(Knight *knight)
 {

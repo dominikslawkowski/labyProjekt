@@ -37,7 +37,6 @@ class Menu
 	
 public:
 	int showMenu();
-	void showAbout();
 };
 
 class CharacterInterface
@@ -55,15 +54,13 @@ public:
 	int fearCounter = 0;
 	int fear[5] = { 0, 1, 2, 5, 10 };
 	int level = 1;
-	//void death(int health);
-	
 };
 
 class Knight : public Character
 {
 public:
-	int strenght = 35; // max 99 
-	int fencing = 30; // max 99
+	int strenght = 35;
+	int fencing = 30;
 	int potions = 3;
 	int scrolls = 3;
 	Knight(string knight_name, int knight_HP)
@@ -78,7 +75,7 @@ public:
 	friend void CharacterInterface::showCharacterInterface(Knight *knight1, Weapon knightWeapon);
 };
 
-class Alchemist : public Character
+/* class Alchemist : public Character
 {
 	int mana = 35;
 	int magic = 30;
@@ -88,7 +85,7 @@ class Archer : public Character
 {
 	int agility = 35;
 	int archery = 30;
-};
+}; */
 
 class Option
 {

@@ -40,6 +40,7 @@ int main()
 
 	while (true)
 	{
+		//Menu call
 		Menu menu1;
 		if (menu1.showMenu() == 3) { system("cls");  return 0; }
 
@@ -47,6 +48,7 @@ int main()
 		cout << endl << endl << endl << endl << endl << endl;
 		cout << setw(90) << "Enter your Knight name: ";
 		SetConsoleTextAttribute(hOut, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
+
 
 		ShowConsoleCursor(true);
 		string name;
@@ -56,7 +58,7 @@ int main()
 		system("cls");
 
 		//////////////////////////////////////////
-		//Creating all characters
+		//Creating all characters and weapons
 		Knight knight1(name, 100);
 		Weapon longSword("Long Sword", 15);
 
